@@ -1,5 +1,6 @@
 package com.kupercy.service.impl;
 
+import com.kupercy.constant.ProductCategory;
 import com.kupercy.dao.ProductDao;
 import com.kupercy.dto.ProductRequest;
 import com.kupercy.model.Product;
@@ -15,8 +16,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts() {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductCategory category,String search) {
+        return productDao.getProducts(category,search);
     }
 
     @Override
