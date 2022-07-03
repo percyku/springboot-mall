@@ -1,5 +1,6 @@
 package com.kupercy.controller;
 
+import com.kupercy.dto.UserLoginRequest;
 import com.kupercy.dto.UserRegisterRequest;
 import com.kupercy.model.User;
 import com.kupercy.service.UserService;
@@ -25,5 +26,12 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
 
+    }
+
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest) {
+        User user = userService.login(userLoginRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }

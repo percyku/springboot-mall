@@ -1,6 +1,7 @@
 package com.kupercy.service.impl;
 
 import com.kupercy.dao.UserDao;
+import com.kupercy.dto.UserLoginRequest;
 import com.kupercy.dto.UserRegisterRequest;
 import com.kupercy.model.User;
 import com.kupercy.service.UserService;
@@ -35,5 +36,25 @@ public class UserServiceImpl implements UserService {
 
         //create user account
         return userDao.createUser(userRegisterRequest);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user =userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if(user == null){
+            log.warn("This email {} is not registered.{}",userLoginRequest.getEmail(),"USER");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if(user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        }
+        else{
+            log.warn("This email's password {} is not correct.{}",userLoginRequest.getEmail(),"USER");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+
     }
 }
