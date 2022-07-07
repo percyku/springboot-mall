@@ -4,6 +4,7 @@ import com.kupercy.dao.OrderDao;
 import com.kupercy.dao.ProductDao;
 import com.kupercy.dto.BuyItem;
 import com.kupercy.dto.CreateOrderRequest;
+import com.kupercy.model.Order;
 import com.kupercy.model.OrderItem;
 import com.kupercy.model.Product;
 import com.kupercy.service.OrderService;
@@ -21,6 +22,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Override
+    public Order getOrderById(Integer orderId) {
+        Order order =orderDao.getOrderById(orderId);
+        List<OrderItem> orderItemList =orderDao.getOrderItemByOrderId(orderId);
+
+        order.setOrderItemList(orderItemList);
+
+        return order;
+    }
 
     @Transactional
     @Override
