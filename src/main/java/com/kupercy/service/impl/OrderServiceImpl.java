@@ -5,6 +5,7 @@ import com.kupercy.dao.ProductDao;
 import com.kupercy.dao.UserDao;
 import com.kupercy.dto.BuyItem;
 import com.kupercy.dto.CreateOrderRequest;
+import com.kupercy.dto.OrderQueryParams;
 import com.kupercy.model.Order;
 import com.kupercy.model.OrderItem;
 import com.kupercy.model.Product;
@@ -93,5 +94,23 @@ public class OrderServiceImpl implements OrderService {
         orderDao.createOrderItems(orderId,orderItemList);
 
         return orderId;
+    }
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+
+        return orderDao.countOrder(orderQueryParams);
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+
+        for(Order order : orderList){
+            List<OrderItem> orderItemList = orderDao.getOrderItemByOrderId(order.getOrderId());
+
+            order.setOrderItemList(orderItemList);
+        }
+        return orderList;
     }
 }

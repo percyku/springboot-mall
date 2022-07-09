@@ -1,5 +1,6 @@
 package com.kupercy.dao;
 
+import com.kupercy.dto.OrderQueryParams;
 import com.kupercy.model.Order;
 import com.kupercy.model.OrderItem;
 
@@ -14,4 +15,8 @@ public interface OrderDao {
     Integer createOrder(Integer userId,Integer totalAmount);
 
     void createOrderItems(Integer orderId, List<OrderItem>orderItemList);
+
+    Integer countOrder(OrderQueryParams orderQueryParams);
+
+    List<Order> getOrders(OrderQueryParams orderQueryParams);
 }
